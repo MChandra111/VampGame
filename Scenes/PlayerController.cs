@@ -72,12 +72,14 @@ public partial class PlayerController : CharacterBody2D
 				isWallJumping = true;
 				Anim.FlipH = false;
 				Anim.Play("Jump");
+				JumpCount = 0;
 			} else if (Input.IsActionJustPressed("Jump") && GetNode<RayCast2D>("RayCastRight").IsColliding() && !IsOnFloor()){
 				velocity.Y = JumpVelocity;
 				velocity.X = JumpVelocity/2;
 				isWallJumping = true;
 				Anim.FlipH = true;
 				Anim.Play("Jump");
+				JumpCount = 0;
 			}
 
 			if (isWallJumping){

@@ -283,10 +283,10 @@ zoom = Vector2(3.5, 3.5)
 
 [node name="RayCastLeft" type="RayCast2D" parent="."]
 rotation = 1.5708
-target_position = Vector2(0, 10)
+target_position = Vector2(0, 8)
 
 [node name="RayCastRight" type="RayCast2D" parent="."]
 rotation = -1.5708
-target_position = Vector2(0, 10)
+target_position = Vector2(0, 8)
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
