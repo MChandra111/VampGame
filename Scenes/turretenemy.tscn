@@ -1,0 +1,113 @@
+[gd_scene load_steps=17 format=3 uid="uid://8k2uc2judarg"]
+
+[ext_resource type="Script" path="res://Scenes/Enemy.cs" id="1_sh4q5"]
+[ext_resource type="PackedScene" uid="uid://wua0khn1penl" path="res://Scenes/arrow.tscn" id="2_qjaoa"]
+[ext_resource type="Texture2D" uid="uid://cninx64266h48" path="res://Graphics/enemies sprites/bomber goblin/bomber_goblin_idle_anim_strip_4.png" id="3_wy4pv"]
+[ext_resource type="Texture2D" uid="uid://cbgpreheijc2u" path="res://Graphics/enemies sprites/bomber goblin/bomber_goblin_attack_anim_strip_6.png" id="4_33734"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nep34"]
+atlas = ExtResource("3_wy4pv")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ke68y"]
+atlas = ExtResource("3_wy4pv")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nutke"]
+atlas = ExtResource("3_wy4pv")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xyrib"]
+atlas = ExtResource("3_wy4pv")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6qgae"]
+atlas = ExtResource("4_33734")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dv4jd"]
+atlas = ExtResource("4_33734")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ojwo1"]
+atlas = ExtResource("4_33734")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lyj0h"]
+atlas = ExtResource("4_33734")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f0fkp"]
+atlas = ExtResource("4_33734")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_thqpq"]
+atlas = ExtResource("4_33734")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_481nr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nep34")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ke68y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nutke")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xyrib")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6qgae")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dv4jd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ojwo1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lyj0h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f0fkp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_thqpq")
+}],
+"loop": true,
+"name": &"Shooting",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tp5mg"]
+radius = 120.017
+
+[node name="Enemy" type="Node2D"]
+position = Vector2(596, 232)
+script = ExtResource("1_sh4q5")
+Arrow = ExtResource("2_qjaoa")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_481nr")
+animation = &"Shooting"
+flip_h = true
+
+[node name="Detection Radius" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detection Radius"]
+shape = SubResource("CircleShape2D_tp5mg")
+
+[node name="Projectile" type="Marker2D" parent="."]
+
+[connection signal="body_entered" from="Detection Radius" to="." method="_on_detection_radius_body_entered"]
+[connection signal="body_exited" from="Detection Radius" to="." method="_on_detection_radius_body_exited"]

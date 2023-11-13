@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://bypgbkt04s3k4"]
+
+[node name="RespawnPoint" type="Marker2D"]
+position = Vector2(136, -13)

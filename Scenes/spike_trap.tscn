@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://c61sa77xlt727"]
+
+[ext_resource type="Script" path="res://Scenes/SpikeTrap.cs" id="1_2133x"]
+[ext_resource type="Texture2D" uid="uid://fhc6m315aoio" path="res://Graphics/miscellaneous sprites/spikes.png" id="2_7aumo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_64pnv"]
+size = Vector2(14, 14)
+
+[node name="SpikeTrap" type="Node2D"]
+position = Vector2(399, 231)
+script = ExtResource("1_2133x")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_7aumo")
+flip_h = true
+flip_v = true
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_64pnv")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
