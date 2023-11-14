@@ -1,16 +1,50 @@
-[gd_scene load_steps=41 format=3 uid="uid://c0inck555ebla"]
+[gd_scene load_steps=51 format=3 uid="uid://c0inck555ebla"]
 
 [ext_resource type="Texture2D" uid="uid://cjj05iu6qwtrf" path="res://Graphics/herochar sprites(new)/herochar_idle_anim_strip_4.png" id="1_t5783"]
 [ext_resource type="Script" path="res://Scenes/PlayerController.cs" id="1_uqbq5"]
 [ext_resource type="Texture2D" uid="uid://quxvnqmllxuu" path="res://Graphics/herochar sprites(new)/herochar_death_anim_strip_8.png" id="2_1kj80"]
 [ext_resource type="Texture2D" uid="uid://civkd1peml37b" path="res://Graphics/herochar sprites(new)/herochar_jump_double_anim_strip_3.png" id="2_k0eaf"]
 [ext_resource type="Texture2D" uid="uid://y5hmm8cp42w4" path="res://Graphics/herochar sprites(new)/herochar_jump_down_anim_strip_3.png" id="2_la5ko"]
+[ext_resource type="Texture2D" uid="uid://e14dfpfwh035" path="res://Graphics/herochar sprites(new)/herochar_sword_attack_anim_strip_4.png" id="2_mk28l"]
+[ext_resource type="Texture2D" uid="uid://b1g4wcevtby5l" path="res://Graphics/herochar sprites(new)/herochar_after_jump_dust_anim_strip_4.png" id="3_7yspr"]
 [ext_resource type="Texture2D" uid="uid://y6rwgrbi2gg0" path="res://Graphics/herochar sprites(new)/herochar_run_anim_strip_6.png" id="3_25m4e"]
 [ext_resource type="Texture2D" uid="uid://bas1kdfm44kwb" path="res://Graphics/herochar sprites(new)/herochar_jump_up_anim_strip_3.png" id="4_jxcp5"]
 [ext_resource type="Texture2D" uid="uid://25rgcpkhetot" path="res://Graphics/herochar sprites(new)/herochar_hit_anim_strip_3.png" id="7_jeiso"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vqd5w"]
 size = Vector2(11, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_njqg8"]
+atlas = ExtResource("2_mk28l")
+region = Rect2(0, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wbk15"]
+atlas = ExtResource("2_mk28l")
+region = Rect2(32, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ah18j"]
+atlas = ExtResource("2_mk28l")
+region = Rect2(64, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spboq"]
+atlas = ExtResource("2_mk28l")
+region = Rect2(96, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v154m"]
+atlas = ExtResource("3_7yspr")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1w5l2"]
+atlas = ExtResource("3_7yspr")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_238u3"]
+atlas = ExtResource("3_7yspr")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5i5h4"]
+atlas = ExtResource("3_7yspr")
+region = Rect2(48, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2ytpm"]
 atlas = ExtResource("2_1kj80")
@@ -134,6 +168,40 @@ region = Rect2(32, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_h6d06"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_njqg8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wbk15")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ah18j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spboq")
+}],
+"loop": false,
+"name": &"Attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v154m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1w5l2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_238u3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5i5h4")
+}],
+"loop": true,
+"name": &"Dash",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_2ytpm")
@@ -273,7 +341,9 @@ shape = SubResource("RectangleShape2D_vqd5w")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_h6d06")
-animation = &"Idle"
+animation = &"Attack"
+frame = 3
+frame_progress = 0.509313
 speed_scale = 2.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -286,5 +356,16 @@ target_position = Vector2(0, 8)
 [node name="RayCastRight" type="RayCast2D" parent="."]
 rotation = -1.5708
 target_position = Vector2(0, 8)
+
+[node name="InvulTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="DashTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

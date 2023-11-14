@@ -8,11 +8,9 @@ public partial class PlayerController : CharacterBody2D
 	{
 		Idle,
 		Running,
-		Attacking,
 		Dashing,
 		TakingDamage,
 		Dead,
-		WallJump
 	}
 	public PlayerState CurrentState = PlayerState.Idle;
 	private const float Speed = 200.0f;
@@ -20,7 +18,7 @@ public partial class PlayerController : CharacterBody2D
 	private const float DoubleJumpVelocity = -300.0f;
 	private int JumpCount = 0;
 	private int JumpMax = 1;
-	private float dashSpeed = 800.0f;
+	private float dashSpeed = 500.0f;
 	private bool isDashing = false;
 	private float dashTimer = .2f;
 	private float dashTimerReset = .2f;
@@ -32,6 +30,10 @@ public partial class PlayerController : CharacterBody2D
 	private Vector2 velocity = Vector2.Zero;
 	private int facingDirection = 0;
 	private bool isTakingDamage = false;
+	private bool isAttacking = false;
+	private float attackTimer = 100f;
+	private float attackTimerReset = 100f;
+	private bool invul = false;
 	private AnimatedSprite2D Anim;
 	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 
@@ -54,8 +56,6 @@ public partial class PlayerController : CharacterBody2D
 			case PlayerState.Idle:
 				idle(direction, delta);
 				break;
-			case PlayerState.Attacking:
-				break;
 			case PlayerState.Running:
 				processHorizontalMovement(direction, delta);
 				break;
@@ -76,104 +76,132 @@ public partial class PlayerController : CharacterBody2D
 
 	private void inputManager(Vector2 direction, double delta)
 	{
-		if (!IsOnFloor()){
+
+		if (!IsOnFloor())
+		{
 			velocity.Y += gravity * (float)delta;
 		}
 
-		if (isTakingDamage){
+		if (isTakingDamage)
+		{
 			CurrentState = PlayerState.TakingDamage;
 		}
 
-		if (Health <= 0){
+		if (Health <= 0)
+		{
 			CurrentState = PlayerState.Dead;
 		}
 
-		if (Health > 0 && !isTakingDamage){
-			// Handle Jump
-			if (JumpCount < JumpMax)
+		// Handle Jump
+		if (JumpCount < JumpMax)
+		{
+			if (Input.IsActionJustPressed("Jump"))
 			{
-				if (Input.IsActionJustPressed("Jump"))
+				velocity.Y = JumpVelocity;
+				JumpCount += 1;
+				//Double Jump
+				if (Input.IsActionJustPressed("Jump") && !IsOnFloor() && JumpCount >= 1)
 				{
-					velocity.Y = JumpVelocity;
-					JumpCount += 1;
-					//Double Jump
-					if (Input.IsActionJustPressed("Jump") && !IsOnFloor() && JumpCount >= 1)
-					{
-						velocity.Y = DoubleJumpVelocity;
-					}
+					velocity.Y = DoubleJumpVelocity;
 				}
 			}
+		}
 
-			//Resetting jump count
-			if (IsOnFloor() && JumpCount != 0)
-			{
-				JumpCount = 0;
-			}
+		//Resetting jump count
+		if (IsOnFloor() && JumpCount != 0)
+		{
+			JumpCount = 0;
+		}
 
-			if (Input.IsActionPressed("Attack"))
-			{
-				CurrentState = PlayerState.Attacking;
-			}
+		if (Health > 0 && !isTakingDamage)
+		{
+
 			if (Input.IsActionPressed("ui_right"))
 			{
-				if (!isWallJumping){
+				if (!isWallJumping)
+				{
 					Anim.FlipH = false;
 				}
-				Anim.Play("Run");
+				if (!isAttacking)
+				{
+					Anim.Play("Run");
+				}
 				facingDirection = 1;
 				CurrentState = PlayerState.Running;
 			}
 			if (Input.IsActionPressed("ui_left"))
 			{
-				if (!isWallJumping){
+				if (!isWallJumping)
+				{
 					Anim.FlipH = true;
 				}
-				Anim.Play("Run");
+				if (!isAttacking)
+				{
+					Anim.Play("Run");
+				}
 				facingDirection = -1;
 				CurrentState = PlayerState.Running;
 			}
-			if (Input.IsActionPressed("Dash"))
+			if (Input.IsActionJustPressed("Dash"))
 			{
 				CurrentState = PlayerState.Dashing;
 			}
 
 			processWallJump(delta);
 
-			if (direction == Vector2.Zero){
+			if (direction == Vector2.Zero)
+			{
 				CurrentState = PlayerState.Idle;
 			}
 
-			if (!isTakingDamage){
-				if (velocity.Y > 0){
+			if (!isTakingDamage && !isAttacking)
+			{
+				if (velocity.Y > 0)
+				{
 					Anim.Play("Fall");
 				}
-				if (velocity.Y < 0 && JumpCount == 0){
+				if (velocity.Y < 0 && JumpCount == 0)
+				{
 					Anim.Play("Jump");
 				}
-				if (velocity.Y < 0 && JumpCount == 1){
+				if (velocity.Y < 0 && JumpCount == 1)
+				{
 					Anim.Play("DoubleJump");
 				}
 			}
 
-			if (IsOnFloor() && !isDashing){
-				isDashAvailable = true;
+			if (Input.IsActionJustPressed("Attack") && !isAttacking && !isDashing)
+			{
+				processAttack(delta);
 			}
 
 			if (isDashing)
 			{
+				Anim.Play("Dash");
 				dashTimer -= (float)delta;
 				if (dashTimer <= 0)
 				{
 					isDashing = false;
-					velocity = new Vector2(0, 0);
+					velocity = new Vector2(velocity.X, 0);
 				}
+			}
+
+			if (GetNode<Timer>("DashTimer").IsStopped() && IsOnFloor())
+			{
+				isDashAvailable = true;
+			}
+
+			if (GetNode<Timer>("AttackTimer").IsStopped())
+			{
+				isAttacking = false;
+				attackTimer = attackTimerReset;
 			}
 		}
 	}
 
 	private void idle(Vector2 direction, double delta)
 	{
-		if (direction == Vector2.Zero)
+		if (direction == Vector2.Zero && !isAttacking)
 		{
 			if (IsOnFloor())
 			{
@@ -240,6 +268,9 @@ public partial class PlayerController : CharacterBody2D
 				isDashing = true;
 			}
 
+			GetNode<Timer>("InvulTimer").Start();
+			GetNode<Timer>("DashTimer").Start();
+
 			dashTimer = dashTimerReset;
 			isDashAvailable = false;
 		}
@@ -250,24 +281,41 @@ public partial class PlayerController : CharacterBody2D
 		if ((isTakingDamage && Velocity.Y == 0) || Input.IsActionJustPressed("Jump") || Input.IsActionJustPressed("Dash"))
 		{
 			isTakingDamage = false;
+			GetNode<Timer>("InvulTimer").Stop();
+		}
+	}
+
+	private void processAttack(double delta)
+	{
+		if (GetNode<Timer>("AttackTimer").IsStopped())
+		{	
+			GetNode<Timer>("AttackTimer").Start();
+			Anim.Play("Attack");
+			isAttacking = true;
+			GD.Print("Started attacking");
 		}
 	}
 
 	//Taking Damage code
 	public void TakeDamage()
 	{
-		if (Health > 0)
+		if (GetNode<Timer>("InvulTimer").IsStopped())
 		{
-			Health -= 1;
-			GD.Print(Health);
-			Velocity = new Vector2(100f * -facingDirection, -300);
-			MoveAndSlide();
-			isTakingDamage = true;
-			Anim.Play("TakeDamage");
-			if (Health <= 0)
+			if (Health > 0)
 			{
-				Health = 0;
-				Anim.Play("Death");
+				Health -= 1;
+				GD.Print(Health);
+				Velocity = new Vector2(100f * -facingDirection, -300);
+				MoveAndSlide();
+				isTakingDamage = true;
+				Anim.Play("TakeDamage");
+				if (Health <= 0)
+				{
+					Health = 0;
+					GetNode<Timer>("InvulTimer").Start();
+					Anim.Play("Death");
+				}
+				GetNode<Timer>("InvulTimer").Start();
 			}
 		}
 	}
