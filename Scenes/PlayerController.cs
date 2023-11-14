@@ -215,10 +215,10 @@ public partial class PlayerController : CharacterBody2D
 			}
 
 			if (facingDirection == 1){
-				GetNode<CollisionShape2D>("AnimatedSprite2D/Area2D/AttackHitBox").Position = new Vector2(9, 2);
+				GetNode<CollisionShape2D>("AnimatedSprite2D/Area2D/AttackHitBox").Position = new Vector2(11, 2);
 			}
 			if (facingDirection == -1){
-				GetNode<CollisionShape2D>("AnimatedSprite2D/Area2D/AttackHitBox").Position = new Vector2(-9, 2);
+				GetNode<CollisionShape2D>("AnimatedSprite2D/Area2D/AttackHitBox").Position = new Vector2(-11, 2);
 			}
 		}
 	}
@@ -303,7 +303,7 @@ public partial class PlayerController : CharacterBody2D
 
 	private void processTakingDamage()
 	{
-		if ((isTakingDamage && Velocity.Y == 0 && IsOnFloor()) || Input.IsActionJustPressed("Jump") || Input.IsActionJustPressed("Dash"))
+		if ((isTakingDamage && Velocity.Y == 0 && IsOnFloor()) || Input.IsActionJustPressed("Jump"))
 		{
 			isTakingDamage = false;
 			GetNode<Timer>("InvulTimer").Stop();

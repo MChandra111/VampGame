@@ -212,7 +212,7 @@ position = Vector2(399, 330)
 position = Vector2(136, 85)
 
 [node name="Enemy" parent="." instance=ExtResource("6_0l8ex")]
-position = Vector2(563, 394)
+position = Vector2(539, 394)
 metadata/_edit_group_ = true
 
 [node name="InterfaceManager" type="CanvasLayer" parent="."]
@@ -223,9 +223,9 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 1.0
+offset_left = -1.0
 offset_top = -2.0
-offset_right = 1.0
+offset_right = -1.0
 offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
