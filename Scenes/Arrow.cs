@@ -20,19 +20,16 @@ public partial class Arrow : Node2D
 		}
 	}
 
-	private void _on_area_2d_body_entered(CharacterBody2D body){
+	private void _on_area_2d_body_entered(Node body){
 		if (body is CharacterBody2D){
 			if(body is PlayerController){
 				PlayerController pc = body as PlayerController;
 				pc.TakeDamage();
+				QueueFree();
 			}
-		} else{
-			GD.Print("POG");
 		}
-		QueueFree();
-	}
-	
-	private void _on_area_2d_body_entered_by_tilemap(TileMap body){
-		QueueFree();
+		if (body is TileMap){
+			QueueFree();
+		}
 	}
 }

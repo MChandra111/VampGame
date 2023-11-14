@@ -49,6 +49,7 @@ public partial class PlayerController : CharacterBody2D
 		velocity = Velocity;
 		Vector2 direction = Input.GetVector("ui_left", "ui_right", "Jump", "ui_down");
 
+		//Input / State manager for resets and general logic calculation (Kinda messy but that's how it be)
 		inputManager(direction, delta);
 		switch (CurrentState)
 		{
@@ -84,6 +85,7 @@ public partial class PlayerController : CharacterBody2D
 		if (isTakingDamage)
 		{
 			CurrentState = PlayerState.TakingDamage;
+			GetNode<Timer>("InvulTimer").Start();
 		}
 
 		if (Health <= 0)
@@ -291,7 +293,7 @@ public partial class PlayerController : CharacterBody2D
 
 	private void processTakingDamage()
 	{
-		if ((isTakingDamage && Velocity.Y == 0) || Input.IsActionJustPressed("Jump") || Input.IsActionJustPressed("Dash"))
+		if ((isTakingDamage && Velocity.Y == 0 && IsOnFloor()) || Input.IsActionJustPressed("Jump") || Input.IsActionJustPressed("Dash"))
 		{
 			isTakingDamage = false;
 			GetNode<Timer>("InvulTimer").Stop();
@@ -352,7 +354,7 @@ public partial class PlayerController : CharacterBody2D
 		GetTree().ReloadCurrentScene();
 	}
 
-	private void _on_area_2d_body_entered(RigidBody2D body){
+	private void _on_area_2d_body_entered(Node2D body){
 		if (body is Enemy){
 			Enemy enemy = body as Enemy;
 			enemy.TakeDamage(swordDamage);

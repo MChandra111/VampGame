@@ -204,7 +204,7 @@ layer_0/tile_data = PackedInt32Array(1245193, 0, 0, 1245246, 131072, 0, 1245194,
 position = Vector2(350, 330)
 
 [node name="SpikeTrap" parent="." instance=ExtResource("4_ku37f")]
-position = Vector2(399, 329)
+position = Vector2(399, 330)
 
 [node name="RespawnPoint" parent="." instance=ExtResource("6_jva2d")]
 position = Vector2(136, 85)

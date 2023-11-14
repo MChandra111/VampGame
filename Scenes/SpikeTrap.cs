@@ -15,7 +15,7 @@ public partial class SpikeTrap : Node2D
 		
 	}
 	
-	private void _on_area_2d_body_entered(CharacterBody2D body){
+	private void _on_area_2d_body_entered(Node2D body){
 		if(body is CharacterBody2D){
 			if(body is PlayerController){
 				PlayerController pc = body as PlayerController;

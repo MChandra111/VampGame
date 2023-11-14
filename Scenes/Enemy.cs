@@ -40,7 +40,7 @@ public partial class Enemy : RigidBody2D
 				if (AbleToShoot)
 				{
 					var SpaceState = GetWorld2D().DirectSpaceState;
-					var query = PhysicsRayQueryParameters2D.Create(this.Position, Player.Position);
+					var query = PhysicsRayQueryParameters2D.Create(this.Position, Player.Position, this.CollisionMask);
 					Godot.Collections.Dictionary result = SpaceState.IntersectRay(query);
 					if (result != null)
 					{
@@ -85,7 +85,7 @@ public partial class Enemy : RigidBody2D
 		}
 	}
 
-	private void _on_detection_radius_body_entered(CharacterBody2D body)
+	private void _on_detection_radius_body_entered(Node2D body)
 	{
 		if (body is PlayerController)
 		{
@@ -94,7 +94,7 @@ public partial class Enemy : RigidBody2D
 		}
 	}
 
-	private void _on_detection_radius_body_exited(CharacterBody2D body)
+	private void _on_detection_radius_body_exited(Node2D body)
 	{
 		if (body is PlayerController)
 		{

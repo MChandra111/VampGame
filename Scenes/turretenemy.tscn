@@ -176,11 +176,12 @@ Arrow = ExtResource("2_qjaoa")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_481nr")
-animation = &"Death"
+animation = &"Idle"
 speed_scale = 2.0
 flip_h = true
 
 [node name="Detection Radius" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Detection Radius"]
 shape = SubResource("CircleShape2D_tp5mg")
