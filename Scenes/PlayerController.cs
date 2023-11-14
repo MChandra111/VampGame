@@ -31,11 +31,10 @@ public partial class PlayerController : CharacterBody2D
 	private int facingDirection = 0;
 	private bool isTakingDamage = false;
 	private bool isAttacking = false;
-	private float attackTimer = 100f;
-	private float attackTimerReset = 100f;
 	private bool invul = false;
 	private AnimatedSprite2D Anim;
 	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
+	public int swordDamage = 1;
 
 	[Signal]
 	public delegate void DeathEventHandler();
@@ -194,16 +193,29 @@ public partial class PlayerController : CharacterBody2D
 			if (GetNode<Timer>("AttackTimer").IsStopped())
 			{
 				isAttacking = false;
-				attackTimer = attackTimerReset;
+			}
+
+			if (isAttacking){
+				GetNode<CollisionShape2D>("AnimatedSprite2D/Area2D/AttackHitBox").Disabled = false;
+			}
+			if (!isAttacking){
+				GetNode<CollisionShape2D>("AnimatedSprite2D/Area2D/AttackHitBox").Disabled = true;
+			}
+
+			if (facingDirection == 1){
+				GetNode<CollisionShape2D>("AnimatedSprite2D/Area2D/AttackHitBox").Position = new Vector2(9, 2);
+			}
+			if (facingDirection == -1){
+				GetNode<CollisionShape2D>("AnimatedSprite2D/Area2D/AttackHitBox").Position = new Vector2(-9, 2);
 			}
 		}
 	}
 
 	private void idle(Vector2 direction, double delta)
 	{
-		if (direction == Vector2.Zero && !isAttacking)
+		if (direction == Vector2.Zero)
 		{
-			if (IsOnFloor())
+			if (IsOnFloor() && !isAttacking)
 			{
 				Anim.Play("Idle");
 			}
@@ -270,6 +282,7 @@ public partial class PlayerController : CharacterBody2D
 
 			GetNode<Timer>("InvulTimer").Start();
 			GetNode<Timer>("DashTimer").Start();
+			GetNode<Timer>("AttackTimer").Stop();
 
 			dashTimer = dashTimerReset;
 			isDashAvailable = false;
@@ -292,7 +305,6 @@ public partial class PlayerController : CharacterBody2D
 			GetNode<Timer>("AttackTimer").Start();
 			Anim.Play("Attack");
 			isAttacking = true;
-			GD.Print("Started attacking");
 		}
 	}
 
@@ -337,5 +349,13 @@ public partial class PlayerController : CharacterBody2D
 		Show();
 		Health = 3;
 		Velocity = new Vector2(0, 0);
+		GetTree().ReloadCurrentScene();
+	}
+
+	private void _on_area_2d_body_entered(RigidBody2D body){
+		if (body is Enemy){
+			Enemy enemy = body as Enemy;
+			enemy.TakeDamage(swordDamage);
+		}
 	}
 }

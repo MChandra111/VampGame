@@ -1,9 +1,35 @@
-[gd_scene load_steps=17 format=3 uid="uid://8k2uc2judarg"]
+[gd_scene load_steps=29 format=3 uid="uid://8k2uc2judarg"]
 
 [ext_resource type="Script" path="res://Scenes/Enemy.cs" id="1_sh4q5"]
 [ext_resource type="PackedScene" uid="uid://wua0khn1penl" path="res://Scenes/arrow.tscn" id="2_qjaoa"]
+[ext_resource type="Texture2D" uid="uid://86dlerqdrf31" path="res://Graphics/enemies sprites/bomber goblin/bomber_goblin_death_anim_strip_6.png" id="3_v2anp"]
 [ext_resource type="Texture2D" uid="uid://cninx64266h48" path="res://Graphics/enemies sprites/bomber goblin/bomber_goblin_idle_anim_strip_4.png" id="3_wy4pv"]
 [ext_resource type="Texture2D" uid="uid://cbgpreheijc2u" path="res://Graphics/enemies sprites/bomber goblin/bomber_goblin_attack_anim_strip_6.png" id="4_33734"]
+[ext_resource type="Texture2D" uid="uid://dvjuev51c7cax" path="res://Graphics/enemies sprites/bomber goblin/bomber_goblin_hit_anim_strip_3.png" id="6_q15re"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ka51j"]
+atlas = ExtResource("3_v2anp")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lpjnk"]
+atlas = ExtResource("3_v2anp")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w10p3"]
+atlas = ExtResource("3_v2anp")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h1qdv"]
+atlas = ExtResource("3_v2anp")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fsvjh"]
+atlas = ExtResource("3_v2anp")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e27xi"]
+atlas = ExtResource("3_v2anp")
+region = Rect2(80, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nep34"]
 atlas = ExtResource("3_wy4pv")
@@ -45,8 +71,43 @@ region = Rect2(64, 0, 16, 16)
 atlas = ExtResource("4_33734")
 region = Rect2(80, 0, 16, 16)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_8q1tf"]
+atlas = ExtResource("6_q15re")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0e203"]
+atlas = ExtResource("6_q15re")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lfr7l"]
+atlas = ExtResource("6_q15re")
+region = Rect2(32, 0, 16, 16)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_481nr"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ka51j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lpjnk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w10p3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h1qdv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fsvjh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e27xi")
+}],
+"loop": false,
+"name": &"Death",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nep34")
@@ -86,21 +147,36 @@ animations = [{
 "loop": true,
 "name": &"Shooting",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8q1tf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0e203")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lfr7l")
+}],
+"loop": true,
+"name": &"TakeDamage",
+"speed": 5.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tp5mg"]
 radius = 120.017
 
-[node name="Enemy" type="Node2D"]
-position = Vector2(596, 232)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yj5xa"]
+size = Vector2(10, 14)
+
+[node name="Enemy" type="RigidBody2D"]
+position = Vector2(593, 232)
 script = ExtResource("1_sh4q5")
 Arrow = ExtResource("2_qjaoa")
-metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_481nr")
-animation = &"Shooting"
-frame_progress = 0.251055
+animation = &"Death"
 speed_scale = 2.0
 flip_h = true
 
@@ -111,5 +187,14 @@ shape = SubResource("CircleShape2D_tp5mg")
 
 [node name="Projectile" type="Marker2D" parent="."]
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_yj5xa")
+
+[node name="AttackedTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="Detection Radius" to="." method="_on_detection_radius_body_entered"]
 [connection signal="body_exited" from="Detection Radius" to="." method="_on_detection_radius_body_exited"]

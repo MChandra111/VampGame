@@ -210,6 +210,6 @@ position = Vector2(399, 329)
 position = Vector2(136, 85)
 
 [node name="Enemy" parent="." instance=ExtResource("6_0l8ex")]
-position = Vector2(596, 330)
+position = Vector2(563, 391)
 
 [connection signal="Death" from="Player" to="." method="_on_player_death"]

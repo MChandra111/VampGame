@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://c0inck555ebla"]
+[gd_scene load_steps=52 format=3 uid="uid://c0inck555ebla"]
 
 [ext_resource type="Texture2D" uid="uid://cjj05iu6qwtrf" path="res://Graphics/herochar sprites(new)/herochar_idle_anim_strip_4.png" id="1_t5783"]
 [ext_resource type="Script" path="res://Scenes/PlayerController.cs" id="1_uqbq5"]
@@ -181,7 +181,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_spboq")
 }],
-"loop": false,
+"loop": true,
 "name": &"Attack",
 "speed": 5.0
 }, {
@@ -331,6 +331,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ttw24"]
+size = Vector2(14, 12)
+
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(347, 230)
 script = ExtResource("1_uqbq5")
@@ -342,9 +345,15 @@ shape = SubResource("RectangleShape2D_vqd5w")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_h6d06")
 animation = &"Attack"
-frame = 3
-frame_progress = 0.509313
+frame_progress = 0.0406238
 speed_scale = 2.0
+
+[node name="Area2D" type="Area2D" parent="AnimatedSprite2D"]
+
+[node name="AttackHitBox" type="CollisionShape2D" parent="AnimatedSprite2D/Area2D"]
+position = Vector2(-9, 2)
+shape = SubResource("RectangleShape2D_ttw24")
+disabled = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(3.5, 3.5)
@@ -365,7 +374,8 @@ one_shot = true
 one_shot = true
 
 [node name="AttackTimer" type="Timer" parent="."]
-wait_time = 0.3
+wait_time = 0.4
 one_shot = true
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="body_entered" from="AnimatedSprite2D/Area2D" to="." method="_on_area_2d_body_entered"]
