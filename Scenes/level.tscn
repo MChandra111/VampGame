@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bib1bnaeyem2f"]
+[gd_scene load_steps=10 format=3 uid="uid://bib1bnaeyem2f"]
 
 [ext_resource type="Texture2D" uid="uid://dtju1ljt0gerg" path="res://Graphics/tiles and background_foreground (new)/tileset.png" id="1_igpq0"]
 [ext_resource type="Script" path="res://GameManager.cs" id="1_wii7s"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c61sa77xlt727" path="res://Scenes/spike_trap.tscn" id="4_ku37f"]
 [ext_resource type="PackedScene" uid="uid://8k2uc2judarg" path="res://Scenes/turretenemy.tscn" id="6_0l8ex"]
 [ext_resource type="PackedScene" uid="uid://bypgbkt04s3k4" path="res://Scenes/respawn_point.tscn" id="6_jva2d"]
+[ext_resource type="Script" path="res://Scenes/InterfaceManager.cs" id="7_qj4p6"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cl7mv"]
 texture = ExtResource("1_igpq0")
@@ -211,5 +212,30 @@ position = Vector2(136, 85)
 
 [node name="Enemy" parent="." instance=ExtResource("6_0l8ex")]
 position = Vector2(563, 391)
+
+[node name="InterfaceManager" type="CanvasLayer" parent="."]
+script = ExtResource("7_qj4p6")
+
+[node name="MainInterface" type="Control" parent="InterfaceManager"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="HealthBar" type="ProgressBar" parent="InterfaceManager/MainInterface"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -332.0
+offset_top = 35.0
+offset_right = -37.0
+offset_bottom = 62.0
+grow_horizontal = 0
+show_percentage = false
 
 [connection signal="Death" from="Player" to="." method="_on_player_death"]

@@ -26,7 +26,8 @@ public partial class PlayerController : CharacterBody2D
 	private bool isWallJumping = false;
 	private float wallJumpTimer = .45f;
 	private float wallJumpTimerReset = .45f;
-	public int Health = 3;
+	public float Health = 3;
+	public float maxHealth = 3;
 	private Vector2 velocity = Vector2.Zero;
 	private int facingDirection = 0;
 	private bool isTakingDamage = false;
@@ -48,6 +49,8 @@ public partial class PlayerController : CharacterBody2D
 	{
 		velocity = Velocity;
 		Vector2 direction = Input.GetVector("ui_left", "ui_right", "Jump", "ui_down");
+
+		InterfaceManager.UpdateHealth(maxHealth, Health);
 
 		//Input / State manager for resets and general logic calculation (Kinda messy but that's how it be)
 		inputManager(direction, delta);
@@ -318,7 +321,6 @@ public partial class PlayerController : CharacterBody2D
 			if (Health > 0)
 			{
 				Health -= 1;
-				GD.Print(Health);
 				Velocity = new Vector2(100f * -facingDirection, -300);
 				MoveAndSlide();
 				isTakingDamage = true;

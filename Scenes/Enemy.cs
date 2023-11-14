@@ -110,7 +110,6 @@ public partial class Enemy : RigidBody2D
 			GetNode<Timer>("AttackedTimer").Start();
 			isTakingDamage = true;
 			Health -= swordDamage;
-			GD.Print("ENEMY HEALTH" + Health);
 			GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("TakeDamage");
 			if (Health <= 0)
 			{
