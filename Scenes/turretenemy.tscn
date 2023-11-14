@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://8k2uc2judarg"]
+[gd_scene load_steps=30 format=3 uid="uid://8k2uc2judarg"]
 
 [ext_resource type="Script" path="res://Scenes/Enemy.cs" id="1_sh4q5"]
 [ext_resource type="PackedScene" uid="uid://wua0khn1penl" path="res://Scenes/arrow.tscn" id="2_qjaoa"]
@@ -169,8 +169,13 @@ radius = 120.017
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yj5xa"]
 size = Vector2(10, 14)
 
-[node name="Enemy" type="RigidBody2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a5rkd"]
+size = Vector2(14, 16)
+
+[node name="Enemy" type="StaticBody2D"]
 position = Vector2(593, 232)
+collision_layer = 4
+collision_mask = 3
 script = ExtResource("1_sh4q5")
 Arrow = ExtResource("2_qjaoa")
 
@@ -181,7 +186,8 @@ speed_scale = 2.0
 flip_h = true
 
 [node name="Detection Radius" type="Area2D" parent="."]
-visible = false
+collision_layer = 4
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Detection Radius"]
 shape = SubResource("CircleShape2D_tp5mg")
@@ -196,6 +202,14 @@ shape = SubResource("RectangleShape2D_yj5xa")
 wait_time = 0.5
 one_shot = true
 
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_a5rkd")
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="Detection Radius" to="." method="_on_detection_radius_body_entered"]
 [connection signal="body_exited" from="Detection Radius" to="." method="_on_detection_radius_body_exited"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

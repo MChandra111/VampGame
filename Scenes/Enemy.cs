@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Enemy : RigidBody2D
+public partial class Enemy : StaticBody2D
 {
 	private PlayerController Player;
 	private bool Active;
@@ -126,6 +126,15 @@ public partial class Enemy : RigidBody2D
 			GetNode<AnimatedSprite2D>("AnimatedSprite2D").Stop();
 			Hide();
 			QueueFree();
+		}
+	}
+
+	private void _on_area_2d_body_entered(Node2D body){
+		if(body is CharacterBody2D){
+			if(body is PlayerController){
+				PlayerController pc = body as PlayerController;
+				pc.TakeDamage();
+			}
 		}
 	}
 }

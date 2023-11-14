@@ -189,6 +189,7 @@ texture = ExtResource("1_igpq0")
 
 [sub_resource type="TileSet" id="TileSet_3g17e"]
 physics_layer_0/collision_layer = 1
+physics_layer_0/collision_mask = 6
 sources/0 = SubResource("TileSetAtlasSource_cl7mv")
 
 [node name="GameManager" type="Node2D" node_paths=PackedStringArray("RespawnPoint")]
@@ -211,7 +212,8 @@ position = Vector2(399, 330)
 position = Vector2(136, 85)
 
 [node name="Enemy" parent="." instance=ExtResource("6_0l8ex")]
-position = Vector2(563, 391)
+position = Vector2(563, 394)
+metadata/_edit_group_ = true
 
 [node name="InterfaceManager" type="CanvasLayer" parent="."]
 script = ExtResource("7_qj4p6")
@@ -221,6 +223,10 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = -2.0
+offset_right = 1.0
+offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 8
