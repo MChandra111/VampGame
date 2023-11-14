@@ -40,7 +40,7 @@ public partial class Enemy : RigidBody2D
 				if (AbleToShoot)
 				{
 					var SpaceState = GetWorld2D().DirectSpaceState;
-					var query = PhysicsRayQueryParameters2D.Create(this.Position, Player.Position, 4294967295);
+					var query = PhysicsRayQueryParameters2D.Create(this.Position, Player.Position);
 					Godot.Collections.Dictionary result = SpaceState.IntersectRay(query);
 					if (result != null)
 					{
