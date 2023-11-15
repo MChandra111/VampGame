@@ -21,12 +21,12 @@ public partial class TurretEnemy : CharacterBody2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		
+
 	}
 
-    public override void _PhysicsProcess(double delta)
-    {
-        Vector2 velocity = Velocity;
+	public override void _PhysicsProcess(double delta)
+	{
+		Vector2 velocity = Velocity;
 		if (!IsOnFloor())
 		{
 			velocity.Y += gravity * (float)delta;
@@ -36,10 +36,10 @@ public partial class TurretEnemy : CharacterBody2D
 
 		Velocity = velocity;
 		MoveAndSlide();
-    }
+	}
 
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(double delta)
+	// Called every frame. 'delta' is the elapsed time since the previous frame.
+	public override void _Process(double delta)
 	{
 		if (Health > 0)
 		{
@@ -127,10 +127,12 @@ public partial class TurretEnemy : CharacterBody2D
 			GetNode<Timer>("AttackedTimer").Start();
 			isTakingDamage = true;
 			Health -= swordDamage;
-			if (GetNode<AnimatedSprite2D>("AnimatedSprite2D").FlipH == true){
+			if (GetNode<AnimatedSprite2D>("AnimatedSprite2D").FlipH == true)
+			{
 				Velocity = new Vector2(100f, -100);
 			}
-			if (GetNode<AnimatedSprite2D>("AnimatedSprite2D").FlipH == false){
+			if (GetNode<AnimatedSprite2D>("AnimatedSprite2D").FlipH == false)
+			{
 				Velocity = new Vector2(-100f, -100);
 			}
 
@@ -154,11 +156,17 @@ public partial class TurretEnemy : CharacterBody2D
 		}
 	}
 
-	private void _on_area_2d_body_entered(Node2D body){
-		if(body is CharacterBody2D){
-			if(body is PlayerController){
-				PlayerController pc = body as PlayerController;
-				pc.TakeDamage();
+	private void _on_area_2d_body_entered(Node2D body)
+	{
+		if (body is CharacterBody2D)
+		{
+			if (body is PlayerController)
+			{
+				if (Health > 0)
+				{
+					PlayerController pc = body as PlayerController;
+					pc.TakeDamage();
+				}
 			}
 		}
 	}

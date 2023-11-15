@@ -245,6 +245,18 @@ offset_bottom = 62.0
 grow_horizontal = 0
 show_percentage = false
 
+[node name="DashBar" type="ProgressBar" parent="InterfaceManager/MainInterface"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -331.0
+offset_top = 78.0
+offset_right = -36.0
+offset_bottom = 105.0
+grow_horizontal = 0
+show_percentage = false
+
 [node name="Arrow" parent="." instance=ExtResource("8_q3dyw")]
 
 [connection signal="Death" from="Player" to="." method="_on_player_death"]

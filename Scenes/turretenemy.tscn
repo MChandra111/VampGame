@@ -170,7 +170,7 @@ radius = 120.017
 size = Vector2(10, 14)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a5rkd"]
-size = Vector2(14, 16)
+size = Vector2(12, 16)
 
 [node name="TurretEnemy" type="CharacterBody2D"]
 position = Vector2(593, 232)
@@ -186,6 +186,7 @@ speed_scale = 2.0
 flip_h = true
 
 [node name="Detection Radius" type="Area2D" parent="."]
+visible = false
 collision_layer = 4
 collision_mask = 2
 

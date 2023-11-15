@@ -51,6 +51,7 @@ public partial class PlayerController : CharacterBody2D
 		Vector2 direction = Input.GetVector("ui_left", "ui_right", "Jump", "ui_down");
 
 		InterfaceManager.UpdateHealth(maxHealth, Health);
+		InterfaceManager.UpdateDashBar((float)GetNode<Timer>("DashTimer").WaitTime, (float)GetNode<Timer>("DashTimer").TimeLeft);
 
 		//Input / State manager for resets and general logic calculation (Kinda messy but that's how it be)
 		inputManager(direction, delta);
@@ -351,6 +352,10 @@ public partial class PlayerController : CharacterBody2D
 			Anim.Stop();
 			Hide();
 			EmitSignal(SignalName.Death);
+		}
+
+		if (Anim.Animation == "Attack"){
+			Anim.Play("Idle");
 		}
 	}
 
