@@ -43,7 +43,7 @@ public partial class TurretEnemy : CharacterBody2D
 	{
 		if (Health > 0)
 		{
-			if (Active && !isTakingDamage)
+			if (Active)
 			{
 				var angle = GlobalPosition.AngleToPoint(Player.GlobalPosition);
 				if (Math.Abs(angle) > Mathf.Pi / 2)
@@ -54,7 +54,7 @@ public partial class TurretEnemy : CharacterBody2D
 				{
 					GetNode<AnimatedSprite2D>("AnimatedSprite2D").FlipH = false;
 				}
-				if (AbleToShoot)
+				if (AbleToShoot && !isTakingDamage)
 				{
 					var SpaceState = GetWorld2D().DirectSpaceState;
 					var query = PhysicsRayQueryParameters2D.Create(this.Position, Player.Position, this.CollisionMask);
@@ -75,8 +75,10 @@ public partial class TurretEnemy : CharacterBody2D
 						}
 					}
 				}
-				GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("Shooting");
-				isShooting = true;
+				if (!isTakingDamage){
+					GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("Shooting");
+					isShooting = true;
+				}
 			}
 			else
 			{

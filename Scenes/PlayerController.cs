@@ -18,7 +18,7 @@ public partial class PlayerController : CharacterBody2D
 	private const float DoubleJumpVelocity = -300.0f;
 	private int JumpCount = 0;
 	private int JumpMax = 1;
-	private float dashSpeed = 500.0f;
+	private float dashSpeed = 400.0f;
 	private bool isDashing = false;
 	private float dashTimer = .2f;
 	private float dashTimerReset = .2f;
@@ -222,11 +222,11 @@ public partial class PlayerController : CharacterBody2D
 
 			if (facingDirection == 1)
 			{
-				GetNode<CollisionShape2D>("AnimatedSprite2D/Area2D/AttackHitBox").Position = new Vector2(11, 2);
+				GetNode<CollisionShape2D>("AnimatedSprite2D/Area2D/AttackHitBox").Position = new Vector2(13, 2);
 			}
 			if (facingDirection == -1)
 			{
-				GetNode<CollisionShape2D>("AnimatedSprite2D/Area2D/AttackHitBox").Position = new Vector2(-11, 2);
+				GetNode<CollisionShape2D>("AnimatedSprite2D/Area2D/AttackHitBox").Position = new Vector2(-13, 2);
 			}
 		}
 	}
@@ -350,6 +350,10 @@ public partial class PlayerController : CharacterBody2D
 		if (body is TurretEnemy)
 		{
 			TurretEnemy enemy = body as TurretEnemy;
+			enemy.TakeDamage(swordDamage);
+		}
+		if (body is SlimeEnemy){
+			SlimeEnemy enemy = body as SlimeEnemy;
 			enemy.TakeDamage(swordDamage);
 		}
 	}
