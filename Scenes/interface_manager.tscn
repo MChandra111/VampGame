@@ -1,0 +1,40 @@
+[gd_scene load_steps=2 format=3 uid="uid://fjfwr7w8k1u"]
+
+[ext_resource type="Script" path="res://Scenes/InterfaceManager.cs" id="1_00rcc"]
+
+[node name="InterfaceManager" type="CanvasLayer"]
+script = ExtResource("1_00rcc")
+
+[node name="MainInterface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="HealthBar" type="ProgressBar" parent="MainInterface"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -332.0
+offset_top = 35.0
+offset_right = -37.0
+offset_bottom = 62.0
+grow_horizontal = 0
+show_percentage = false
+
+[node name="DashBar" type="ProgressBar" parent="MainInterface"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -331.0
+offset_top = 78.0
+offset_right = -36.0
+offset_bottom = 105.0
+grow_horizontal = 0
+show_percentage = false

@@ -26,7 +26,7 @@ public partial class PlayerController : CharacterBody2D
 	private bool isWallJumping = false;
 	private float wallJumpTimer = .45f;
 	private float wallJumpTimerReset = .45f;
-	public float maxHealth = 3;
+	public float maxHealth = 5;
 	public float Health;
 	private Vector2 velocity = Vector2.Zero;
 	private int facingDirection = 0;
@@ -364,7 +364,8 @@ public partial class PlayerController : CharacterBody2D
 			GoblinEnemy enemy = body as GoblinEnemy;
 			enemy.TakeDamage(swordDamage);
 		}
-		if (body is Arrow){
+		if (body is Arrow)
+		{
 			Arrow arrow = body as Arrow;
 			arrow.DestroyArrow();
 		}
