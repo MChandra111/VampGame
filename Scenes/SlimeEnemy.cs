@@ -60,12 +60,14 @@ public partial class SlimeEnemy : CharacterBody2D
 			sprite.FlipH = true;
 			facingDirection = 1;
 		}
-		else if (RightMiddle.IsColliding()){
+		else if (RightMiddle.IsColliding())
+		{
 			velocity.X = -speed;
 			sprite.FlipH = false;
 			facingDirection = -1;
 		}
-		else if (LeftMiddle.IsColliding()){
+		else if (LeftMiddle.IsColliding())
+		{
 			velocity.X = speed;
 			sprite.FlipH = true;
 			facingDirection = 1;
@@ -176,8 +178,10 @@ public partial class SlimeEnemy : CharacterBody2D
 		}
 	}
 
-	private void _on_animated_sprite_2d_animation_finished(){
-		if (GetNode<AnimatedSprite2D>("AnimatedSprite2D").Animation == "Death"){
+	private void _on_animated_sprite_2d_animation_finished()
+	{
+		if (GetNode<AnimatedSprite2D>("AnimatedSprite2D").Animation == "Death")
+		{
 			GetNode<AnimatedSprite2D>("AnimatedSprite2D").Stop();
 			Hide();
 			QueueFree();

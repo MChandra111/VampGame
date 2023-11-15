@@ -311,7 +311,7 @@ public partial class PlayerController : CharacterBody2D
 
 	private void processTakingDamage()
 	{
-		if ((isTakingDamage && Velocity.Y == 0 && IsOnFloor()) || Input.IsActionJustPressed("Jump"))
+		if ((isTakingDamage && Velocity.Y == 0 && IsOnFloor()) || (Input.IsActionJustPressed("Jump") && (JumpCount < JumpMax)))
 		{
 			isTakingDamage = false;
 			GetNode<Timer>("InvulTimer").Stop();
@@ -352,13 +352,14 @@ public partial class PlayerController : CharacterBody2D
 			TurretEnemy enemy = body as TurretEnemy;
 			enemy.TakeDamage(swordDamage);
 		}
-		if (body is SlimeEnemy){
+		if (body is SlimeEnemy)
+		{
 			SlimeEnemy enemy = body as SlimeEnemy;
 			enemy.TakeDamage(swordDamage);
 		}
 	}
 
-	
+
 	//Public functions that other stuff interacts with
 
 	//Taking Damage code
@@ -394,7 +395,8 @@ public partial class PlayerController : CharacterBody2D
 	}
 
 	//Healing player code
-	public void RestorePlayer(){
+	public void RestorePlayer()
+	{
 		Health = maxHealth;
 	}
 }
