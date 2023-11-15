@@ -1,6 +1,6 @@
 [gd_scene load_steps=30 format=3 uid="uid://8k2uc2judarg"]
 
-[ext_resource type="Script" path="res://Scenes/Enemy.cs" id="1_sh4q5"]
+[ext_resource type="Script" path="res://Scenes/TurretEnemy.cs" id="1_lwi4o"]
 [ext_resource type="PackedScene" uid="uid://wua0khn1penl" path="res://Scenes/arrow.tscn" id="2_qjaoa"]
 [ext_resource type="Texture2D" uid="uid://86dlerqdrf31" path="res://Graphics/enemies sprites/bomber goblin/bomber_goblin_death_anim_strip_6.png" id="3_v2anp"]
 [ext_resource type="Texture2D" uid="uid://cninx64266h48" path="res://Graphics/enemies sprites/bomber goblin/bomber_goblin_idle_anim_strip_4.png" id="3_wy4pv"]
@@ -176,7 +176,7 @@ size = Vector2(14, 16)
 position = Vector2(593, 232)
 collision_layer = 4
 collision_mask = 3
-script = ExtResource("1_sh4q5")
+script = ExtResource("1_lwi4o")
 Arrow = ExtResource("2_qjaoa")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -199,7 +199,6 @@ position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_yj5xa")
 
 [node name="AttackedTimer" type="Timer" parent="."]
-wait_time = 0.5
 one_shot = true
 
 [node name="Area2D" type="Area2D" parent="."]

@@ -4,10 +4,11 @@ using System;
 public partial class TurretEnemy : CharacterBody2D
 {
 	private PlayerController Player;
+	private int Speed = 2;
 	private bool Active;
 	private bool AbleToShoot;
-	private float ShootTimer = 0.7f;
-	private float ShootTimerReset = 0.7f;
+	private float ShootTimer = 1.3f;
+	private float ShootTimerReset = 1.3f;
 	private int Health = 3;
 	private bool isTakingDamage = false;
 	[Export]
@@ -15,14 +16,30 @@ public partial class TurretEnemy : CharacterBody2D
 
 	public bool isShooting = false;
 
+	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+    public override void _PhysicsProcess(double delta)
+    {
+        Vector2 velocity = Velocity;
+		if (!IsOnFloor())
+		{
+			velocity.Y += gravity * (float)delta;
+		}
+
+		velocity.X = Mathf.Lerp(Velocity.X, 0, (float)delta * Speed);
+
+		Velocity = velocity;
+		MoveAndSlide();
+    }
+
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _Process(double delta)
 	{
 		if (Health > 0)
 		{
@@ -111,10 +128,10 @@ public partial class TurretEnemy : CharacterBody2D
 			isTakingDamage = true;
 			Health -= swordDamage;
 			if (GetNode<AnimatedSprite2D>("AnimatedSprite2D").FlipH == true){
-				Velocity = new Vector2(100f, -300);
+				Velocity = new Vector2(100f, -100);
 			}
 			if (GetNode<AnimatedSprite2D>("AnimatedSprite2D").FlipH == false){
-				Velocity = new Vector2(-100f, -300);
+				Velocity = new Vector2(-100f, -100);
 			}
 
 			MoveAndSlide();
