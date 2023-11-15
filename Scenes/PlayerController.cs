@@ -364,6 +364,11 @@ public partial class PlayerController : CharacterBody2D
 			GoblinEnemy enemy = body as GoblinEnemy;
 			enemy.TakeDamage(swordDamage);
 		}
+		if (body is Arrow){
+			GD.Print("HI");
+			Arrow arrow = body as Arrow;
+			arrow.DestroyArrow();
+		}
 	}
 
 

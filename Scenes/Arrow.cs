@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Arrow : Node2D
+public partial class Arrow : CharacterBody2D
 {
 	private int speed = 150;
 	private float lifeSpan = 20;
@@ -36,5 +36,9 @@ public partial class Arrow : Node2D
 		{
 			QueueFree();
 		}
+	}
+
+	public void DestroyArrow(){
+		QueueFree();
 	}
 }
