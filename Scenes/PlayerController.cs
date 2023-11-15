@@ -359,7 +359,8 @@ public partial class PlayerController : CharacterBody2D
 			SlimeEnemy enemy = body as SlimeEnemy;
 			enemy.TakeDamage(swordDamage);
 		}
-		if (body is GoblinEnemy){
+		if (body is GoblinEnemy)
+		{
 			GoblinEnemy enemy = body as GoblinEnemy;
 			enemy.TakeDamage(swordDamage);
 		}

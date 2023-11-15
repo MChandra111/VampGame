@@ -95,10 +95,6 @@ public partial class GoblinEnemy : CharacterBody2D
 				isAttacking = false;
 			}
 
-			if(GetNode<CollisionShape2D>("AttackHitbox/CollisionShape2D").Disabled == false){
-				GD.Print("ACTIVE");
-			}
-
 			if (GetNode<Timer>("AttackLengthTimer").IsStopped())
 			{
 				GetNode<CollisionShape2D>("AttackHitbox/CollisionShape2D").Disabled = true;
