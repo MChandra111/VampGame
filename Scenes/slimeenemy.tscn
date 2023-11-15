@@ -185,6 +185,7 @@ rotation = -1.5708
 target_position = Vector2(0, 8)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visible = false
 position = Vector2(-1, 8)
 sprite_frames = SubResource("SpriteFrames_o1vym")
 animation = &"Death"
