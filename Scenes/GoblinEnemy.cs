@@ -18,16 +18,16 @@ public partial class GoblinEnemy : CharacterBody2D
 	private bool isAttacking = false;
 	private bool playerIsInAttackRange = false;
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
-	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle()/2;
+	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle() / 2;
 
 	public override void _Ready()
 	{
 		base._Ready();
 	}
 
-    public override void _Process(double delta)
-    {
-        if (Health > 0)
+	public override void _Process(double delta)
+	{
+		if (Health > 0)
 		{
 			if (Active)
 			{
@@ -95,24 +95,26 @@ public partial class GoblinEnemy : CharacterBody2D
 				isAttacking = false;
 			}
 
+			if(GetNode<CollisionShape2D>("AttackHitbox/CollisionShape2D").Disabled == false){
+				GD.Print("ACTIVE");
+			}
+
 			if (GetNode<Timer>("AttackLengthTimer").IsStopped())
 			{
 				GetNode<CollisionShape2D>("AttackHitbox/CollisionShape2D").Disabled = true;
-				isChasing = true;
 			}
-
-			else if (!GetNode<Timer>("AttackLengthTImer").IsStopped() && !isTakingDamage)
+			else if (!GetNode<Timer>("AttackLengthTimer").IsStopped() && !isTakingDamage)
 			{
 				GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("Attacking");
 			}
 
 			if (facingDirection == 1)
 			{
-				GetNode<CollisionShape2D>("AttackHitbox/CollisionShape2D").Position = new Vector2(10, 0);
+				GetNode<CollisionShape2D>("AttackHitbox/CollisionShape2D").Position = new Vector2(12, 0);
 			}
 			else if (facingDirection == -1)
 			{
-				GetNode<CollisionShape2D>("AttackHitbox/CollisionShape2D").Position = new Vector2(-10, 0);
+				GetNode<CollisionShape2D>("AttackHitbox/CollisionShape2D").Position = new Vector2(-12, 0);
 			}
 
 			if (playerIsInAttackRange && GetNode<Timer>("AttackTimer").IsStopped() && !isTakingDamage)
@@ -125,13 +127,14 @@ public partial class GoblinEnemy : CharacterBody2D
 				velocity.X = Mathf.Lerp(Velocity.X, 0, (float)delta * Recovery);
 			}
 
-			if (GetNode<Timer>("AttackedTimer").IsStopped()){
+			if (GetNode<Timer>("AttackedTimer").IsStopped())
+			{
 				isTakingDamage = false;
 			}
 		}
-    }
+	}
 
-    public override void _PhysicsProcess(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
 		if (!IsOnFloor())
 			velocity.Y += gravity * (float)delta;
@@ -195,9 +198,12 @@ public partial class GoblinEnemy : CharacterBody2D
 	}
 
 	//Detecting if player touches enemy
-	public void _on_hurt_box_body_entered(Node2D body){
-		if (body is PlayerController){
-			if (Health > 0){
+	public void _on_hurt_box_body_entered(Node2D body)
+	{
+		if (body is PlayerController)
+		{
+			if (Health > 0)
+			{
 				Player.TakeDamage();
 			}
 		}
@@ -207,6 +213,7 @@ public partial class GoblinEnemy : CharacterBody2D
 	private void Attack()
 	{
 		GetNode<Timer>("AttackTimer").Start();
+		GetNode<Timer>("AttackLengthTimer").Start();
 		GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("Attacking");
 		GetNode<CollisionShape2D>("AttackHitbox/CollisionShape2D").Disabled = false;
 		isAttacking = true;
@@ -231,8 +238,10 @@ public partial class GoblinEnemy : CharacterBody2D
 		}
 	}
 
-	public void _on_animated_sprite_2d_animation_finished(){
-		if (GetNode<AnimatedSprite2D>("AnimatedSprite2D").Animation == "Death"){
+	public void _on_animated_sprite_2d_animation_finished()
+	{
+		if (GetNode<AnimatedSprite2D>("AnimatedSprite2D").Animation == "Death")
+		{
 			GetNode<AnimatedSprite2D>("AnimatedSprite2D").Stop();
 			Hide();
 			QueueFree();
