@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Enemy : StaticBody2D
+public partial class TurretEnemy : CharacterBody2D
 {
 	private PlayerController Player;
 	private bool Active;
@@ -18,7 +18,7 @@ public partial class Enemy : StaticBody2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-
+		
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -110,6 +110,14 @@ public partial class Enemy : StaticBody2D
 			GetNode<Timer>("AttackedTimer").Start();
 			isTakingDamage = true;
 			Health -= swordDamage;
+			if (GetNode<AnimatedSprite2D>("AnimatedSprite2D").FlipH == true){
+				Velocity = new Vector2(100f, -300);
+			}
+			if (GetNode<AnimatedSprite2D>("AnimatedSprite2D").FlipH == false){
+				Velocity = new Vector2(-100f, -300);
+			}
+
+			MoveAndSlide();
 			GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("TakeDamage");
 			if (Health <= 0)
 			{

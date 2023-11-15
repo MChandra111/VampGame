@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bib1bnaeyem2f"]
+[gd_scene load_steps=11 format=3 uid="uid://bib1bnaeyem2f"]
 
 [ext_resource type="Texture2D" uid="uid://dtju1ljt0gerg" path="res://Graphics/tiles and background_foreground (new)/tileset.png" id="1_igpq0"]
 [ext_resource type="Script" path="res://GameManager.cs" id="1_wii7s"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://8k2uc2judarg" path="res://Scenes/turretenemy.tscn" id="6_0l8ex"]
 [ext_resource type="PackedScene" uid="uid://bypgbkt04s3k4" path="res://Scenes/respawn_point.tscn" id="6_jva2d"]
 [ext_resource type="Script" path="res://Scenes/InterfaceManager.cs" id="7_qj4p6"]
+[ext_resource type="PackedScene" uid="uid://wua0khn1penl" path="res://Scenes/arrow.tscn" id="8_q3dyw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cl7mv"]
 texture = ExtResource("1_igpq0")
@@ -243,5 +244,7 @@ offset_right = -37.0
 offset_bottom = 62.0
 grow_horizontal = 0
 show_percentage = false
+
+[node name="Arrow" parent="." instance=ExtResource("8_q3dyw")]
 
 [connection signal="Death" from="Player" to="." method="_on_player_death"]

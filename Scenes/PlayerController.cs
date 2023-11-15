@@ -364,8 +364,8 @@ public partial class PlayerController : CharacterBody2D
 	}
 
 	private void _on_area_2d_body_entered(Node2D body){
-		if (body is Enemy){
-			Enemy enemy = body as Enemy;
+		if (body is TurretEnemy){
+			TurretEnemy enemy = body as TurretEnemy;
 			enemy.TakeDamage(swordDamage);
 		}
 	}
