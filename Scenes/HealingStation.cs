@@ -1,10 +1,8 @@
 using Godot;
 using System;
 
-public partial class Arrow : Node2D
+public partial class HealingStation : Node2D
 {
-	private int speed = 150;
-	private float lifeSpan = 20;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -13,28 +11,18 @@ public partial class Arrow : Node2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		Position += Transform.X * (float)delta * speed;
-		lifeSpan -= (float)delta;
-		if (lifeSpan < 0)
-		{
-			QueueFree();
-		}
 	}
 
-	private void _on_area_2d_body_entered(Node body)
+	private void _on_area_2d_body_entered(Node2D body)
 	{
 		if (body is CharacterBody2D)
 		{
 			if (body is PlayerController)
 			{
 				PlayerController pc = body as PlayerController;
-				pc.TakeDamage();
+				pc.RestorePlayer();
 				QueueFree();
 			}
-		}
-		if (body is TileMap)
-		{
-			QueueFree();
 		}
 	}
 }

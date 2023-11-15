@@ -26,8 +26,8 @@ public partial class PlayerController : CharacterBody2D
 	private bool isWallJumping = false;
 	private float wallJumpTimer = .45f;
 	private float wallJumpTimerReset = .45f;
-	public float Health = 3;
 	public float maxHealth = 3;
+	public float Health;
 	private Vector2 velocity = Vector2.Zero;
 	private int facingDirection = 0;
 	private bool isTakingDamage = false;
@@ -43,6 +43,7 @@ public partial class PlayerController : CharacterBody2D
 	public override void _Ready()
 	{
 		Anim = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		Health = maxHealth;
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -191,13 +192,15 @@ public partial class PlayerController : CharacterBody2D
 				}
 			}
 
-			if (!GetNode<Timer>("InvulTimer").IsStopped()){
+			if (!GetNode<Timer>("InvulTimer").IsStopped())
+			{
 				this.SetCollisionMaskValue(3, false);
 			}
-			if (GetNode<Timer>("InvulTimer").IsStopped()){
+			if (GetNode<Timer>("InvulTimer").IsStopped())
+			{
 				this.SetCollisionMaskValue(3, true);
 			}
-			
+
 			if (GetNode<Timer>("DashTimer").IsStopped() && IsOnFloor())
 			{
 				isDashAvailable = true;
@@ -208,17 +211,21 @@ public partial class PlayerController : CharacterBody2D
 				isAttacking = false;
 			}
 
-			if (isAttacking){
+			if (isAttacking)
+			{
 				GetNode<CollisionShape2D>("AnimatedSprite2D/Area2D/AttackHitBox").Disabled = false;
 			}
-			if (!isAttacking){
+			if (!isAttacking)
+			{
 				GetNode<CollisionShape2D>("AnimatedSprite2D/Area2D/AttackHitBox").Disabled = true;
 			}
 
-			if (facingDirection == 1){
+			if (facingDirection == 1)
+			{
 				GetNode<CollisionShape2D>("AnimatedSprite2D/Area2D/AttackHitBox").Position = new Vector2(11, 2);
 			}
-			if (facingDirection == -1){
+			if (facingDirection == -1)
+			{
 				GetNode<CollisionShape2D>("AnimatedSprite2D/Area2D/AttackHitBox").Position = new Vector2(-11, 2);
 			}
 		}
@@ -314,7 +321,7 @@ public partial class PlayerController : CharacterBody2D
 	private void processAttack(double delta)
 	{
 		if (GetNode<Timer>("AttackTimer").IsStopped())
-		{	
+		{
 			GetNode<Timer>("AttackTimer").Start();
 			Anim.Play("Attack");
 			isAttacking = true;
@@ -354,7 +361,8 @@ public partial class PlayerController : CharacterBody2D
 			EmitSignal(SignalName.Death);
 		}
 
-		if (Anim.Animation == "Attack"){
+		if (Anim.Animation == "Attack")
+		{
 			Anim.Play("Idle");
 		}
 	}
@@ -363,13 +371,20 @@ public partial class PlayerController : CharacterBody2D
 	public void RespawnPlayer()
 	{
 		Show();
-		Health = 3;
+		Health = maxHealth;
 		Velocity = new Vector2(0, 0);
 		GetTree().ReloadCurrentScene();
 	}
 
-	private void _on_area_2d_body_entered(Node2D body){
-		if (body is TurretEnemy){
+	public void RestorePlayer(){
+		Health = maxHealth;
+	}
+
+	//AttackingLogic
+	private void _on_area_2d_body_entered(Node2D body)
+	{
+		if (body is TurretEnemy)
+		{
 			TurretEnemy enemy = body as TurretEnemy;
 			enemy.TakeDamage(swordDamage);
 		}

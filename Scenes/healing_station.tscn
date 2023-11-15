@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://dp26vfcb6ln5b"]
+
+[ext_resource type="Texture2D" uid="uid://c5omouu5j3b38" path="res://Graphics/miscellaneous sprites/health_potion.png" id="1_pcrhc"]
+[ext_resource type="Script" path="res://Scenes/HealingStation.cs" id="1_q2ltp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7ny2e"]
+size = Vector2(33, 33)
+
+[node name="HealingStation" type="Node2D"]
+script = ExtResource("1_q2ltp")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_pcrhc")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_7ny2e")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

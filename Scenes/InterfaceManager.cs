@@ -17,11 +17,13 @@ public partial class InterfaceManager : CanvasLayer
 	{
 	}
 
-	public static void UpdateHealth(float maxHealth, float health){
+	public static void UpdateHealth(float maxHealth, float health)
+	{
 		HealthBar.Value = health / maxHealth * HealthBar.MaxValue;
 	}
 
-	public static void UpdateDashBar(float maxTime, float timeLeft){
+	public static void UpdateDashBar(float maxTime, float timeLeft)
+	{
 		DashBar.Value = timeLeft / maxTime * DashBar.MaxValue;
 	}
 }
