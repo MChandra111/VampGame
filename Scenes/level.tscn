@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bib1bnaeyem2f"]
+[gd_scene load_steps=13 format=3 uid="uid://bib1bnaeyem2f"]
 
 [ext_resource type="Texture2D" uid="uid://dtju1ljt0gerg" path="res://Graphics/tiles and background_foreground (new)/tileset.png" id="1_igpq0"]
 [ext_resource type="Script" path="res://GameManager.cs" id="1_wii7s"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://Scenes/InterfaceManager.cs" id="7_qj4p6"]
 [ext_resource type="PackedScene" uid="uid://beadd5aksuqrn" path="res://Scenes/slimeenemy.tscn" id="9_4iiav"]
 [ext_resource type="PackedScene" uid="uid://dp26vfcb6ln5b" path="res://Scenes/healing_station.tscn" id="9_aq0sx"]
+[ext_resource type="PackedScene" uid="uid://fxwd68tv0xnu" path="res://Scenes/goblinenemy.tscn" id="10_nor0y"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cl7mv"]
 texture = ExtResource("1_igpq0")
@@ -259,5 +260,8 @@ position = Vector2(223, 73)
 
 [node name="SlimeEnemy" parent="." instance=ExtResource("9_4iiav")]
 position = Vector2(842, 374)
+
+[node name="GoblinEnemy" parent="." instance=ExtResource("10_nor0y")]
+position = Vector2(332, 195)
 
 [connection signal="Death" from="Player" to="." method="_on_player_death"]
