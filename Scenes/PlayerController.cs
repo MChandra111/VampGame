@@ -328,6 +328,35 @@ public partial class PlayerController : CharacterBody2D
 		}
 	}
 
+	//Stopping death animation
+	private void _on_animated_sprite_2d_animation_finished()
+	{
+		if (Anim.Animation == "Death")
+		{
+			Anim.Stop();
+			Hide();
+			EmitSignal(SignalName.Death);
+		}
+
+		if (Anim.Animation == "Attack")
+		{
+			Anim.Play("Idle");
+		}
+	}
+
+	//AttackingLogic
+	private void _on_area_2d_body_entered(Node2D body)
+	{
+		if (body is TurretEnemy)
+		{
+			TurretEnemy enemy = body as TurretEnemy;
+			enemy.TakeDamage(swordDamage);
+		}
+	}
+
+	
+	//Public functions that other stuff interacts with
+
 	//Taking Damage code
 	public void TakeDamage()
 	{
@@ -351,22 +380,6 @@ public partial class PlayerController : CharacterBody2D
 		}
 	}
 
-	//Stopping death animation
-	private void _on_animated_sprite_2d_animation_finished()
-	{
-		if (Anim.Animation == "Death")
-		{
-			Anim.Stop();
-			Hide();
-			EmitSignal(SignalName.Death);
-		}
-
-		if (Anim.Animation == "Attack")
-		{
-			Anim.Play("Idle");
-		}
-	}
-
 	//Respawning player code
 	public void RespawnPlayer()
 	{
@@ -376,17 +389,8 @@ public partial class PlayerController : CharacterBody2D
 		GetTree().ReloadCurrentScene();
 	}
 
+	//Healing player code
 	public void RestorePlayer(){
 		Health = maxHealth;
-	}
-
-	//AttackingLogic
-	private void _on_area_2d_body_entered(Node2D body)
-	{
-		if (body is TurretEnemy)
-		{
-			TurretEnemy enemy = body as TurretEnemy;
-			enemy.TakeDamage(swordDamage);
-		}
 	}
 }
