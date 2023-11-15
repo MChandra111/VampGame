@@ -65,7 +65,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_knm4h"]
-size = Vector2(11, 3)
+size = Vector2(12, 2)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mluxd"]
 radius = 7.0
@@ -141,7 +141,7 @@ libraries = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, 10.5)
+position = Vector2(0, 11)
 shape = SubResource("RectangleShape2D_knm4h")
 debug_color = Color(0.968627, 0, 0.470588, 0.419608)
 

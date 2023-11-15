@@ -195,10 +195,12 @@ public partial class PlayerController : CharacterBody2D
 			if (!GetNode<Timer>("InvulTimer").IsStopped())
 			{
 				this.SetCollisionMaskValue(3, false);
+				this.SetCollisionLayerValue(2, false);
 			}
 			if (GetNode<Timer>("InvulTimer").IsStopped())
 			{
 				this.SetCollisionMaskValue(3, true);
+				this.SetCollisionLayerValue(2, true);
 			}
 
 			if (GetNode<Timer>("DashTimer").IsStopped() && IsOnFloor())
