@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://beadd5aksuqrn"]
+[gd_scene load_steps=17 format=3 uid="uid://beadd5aksuqrn"]
 
 [ext_resource type="Script" path="res://Scenes/SlimeEnemy.cs" id="1_qhrku"]
 [ext_resource type="Texture2D" uid="uid://clhdi2n4q6adk" path="res://Graphics/enemies sprites/slime/slime_walk_anim_strip_15.png" id="2_j1q3v"]
+[ext_resource type="Texture2D" uid="uid://b0jcmjlqfwfb2" path="res://Graphics/enemies sprites/slime/slime_death_anim_strip_6.png" id="3_y0sxe"]
 
 [sub_resource type="Animation" id="Animation_wwxaa"]
 resource_name = "Move"
@@ -57,14 +58,10 @@ tracks/1/keys = {
 "values": [Vector2(0, 7)]
 }
 
-[sub_resource type="Animation" id="Animation_8yqbh"]
-resource_name = "TakeDamage"
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hdme7"]
 _data = {
 "Move": SubResource("Animation_wwxaa"),
-"RESET": SubResource("Animation_2ohln"),
-"TakeDamage": SubResource("Animation_8yqbh")
+"RESET": SubResource("Animation_2ohln")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_knm4h"]
@@ -75,6 +72,59 @@ radius = 7.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_i8sxb"]
 radius = 62.0081
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ry78"]
+atlas = ExtResource("3_y0sxe")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lq464"]
+atlas = ExtResource("3_y0sxe")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_18ohf"]
+atlas = ExtResource("3_y0sxe")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k3off"]
+atlas = ExtResource("3_y0sxe")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rodra"]
+atlas = ExtResource("3_y0sxe")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mo5nq"]
+atlas = ExtResource("3_y0sxe")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o1vym"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ry78")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lq464")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_18ohf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k3off")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rodra")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mo5nq")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"Death",
+"speed": 5.0
+}]
 
 [node name="SlimeEnemy" type="CharacterBody2D"]
 collision_layer = 4
@@ -134,6 +184,12 @@ position = Vector2(0, 7)
 rotation = -1.5708
 target_position = Vector2(0, 8)
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1, 8)
+sprite_frames = SubResource("SpriteFrames_o1vym")
+animation = &"Death"
+
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_entered" from="DetectionRadius" to="." method="_on_detection_radius_body_entered"]
 [connection signal="body_exited" from="DetectionRadius" to="." method="_on_detection_radius_body_exited"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

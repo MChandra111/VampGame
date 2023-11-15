@@ -31,6 +31,7 @@ public partial class SlimeEnemy : CharacterBody2D
 		AnimPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		LeftMiddle = GetNode<RayCast2D>("LeftRay");
 		RightMiddle = GetNode<RayCast2D>("RightRay");
+		GetNode<AnimatedSprite2D>("AnimatedSprite2D").Hide();
 		velocity.X = speed;
 	}
 
@@ -168,8 +169,18 @@ public partial class SlimeEnemy : CharacterBody2D
 			if (Health <= 0)
 			{
 				Health = 0;
-				QueueFree();
+				sprite.Hide();
+				GetNode<AnimatedSprite2D>("AnimatedSprite2D").Show();
+				GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("Death");
 			}
+		}
+	}
+
+	private void _on_animated_sprite_2d_animation_finished(){
+		if (GetNode<AnimatedSprite2D>("AnimatedSprite2D").Animation == "Death"){
+			GetNode<AnimatedSprite2D>("AnimatedSprite2D").Stop();
+			Hide();
+			QueueFree();
 		}
 	}
 }

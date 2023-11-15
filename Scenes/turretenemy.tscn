@@ -175,7 +175,6 @@ size = Vector2(12, 16)
 [node name="TurretEnemy" type="CharacterBody2D"]
 position = Vector2(593, 232)
 collision_layer = 4
-collision_mask = 3
 script = ExtResource("1_lwi4o")
 Arrow = ExtResource("2_qjaoa")
 
