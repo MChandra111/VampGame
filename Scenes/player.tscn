@@ -372,7 +372,7 @@ rotation = -1.5708
 target_position = Vector2(0, 8)
 
 [node name="InvulTimer" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.3
 one_shot = true
 
 [node name="DashTimer" type="Timer" parent="."]
