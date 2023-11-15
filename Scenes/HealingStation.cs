@@ -20,8 +20,11 @@ public partial class HealingStation : Node2D
 			if (body is PlayerController)
 			{
 				PlayerController pc = body as PlayerController;
-				pc.RestorePlayer();
-				QueueFree();
+				if (pc.Health < pc.maxHealth)
+				{
+					pc.RestorePlayer();
+					QueueFree();
+				}
 			}
 		}
 	}
