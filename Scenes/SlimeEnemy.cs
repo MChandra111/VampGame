@@ -94,10 +94,12 @@ public partial class SlimeEnemy : CharacterBody2D
 	public override void _Process(double delta)
 	{
 
-		if (isChasing){
+		if (isChasing)
+		{
 			speed = 50;
 		}
-		if (!isChasing){
+		if (!isChasing)
+		{
 			speed = 30;
 		}
 

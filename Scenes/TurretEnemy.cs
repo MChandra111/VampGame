@@ -75,7 +75,8 @@ public partial class TurretEnemy : CharacterBody2D
 						}
 					}
 				}
-				if (!isTakingDamage){
+				if (!isTakingDamage)
+				{
 					GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("Shooting");
 					isShooting = true;
 				}

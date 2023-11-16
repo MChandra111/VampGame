@@ -18,13 +18,15 @@ public partial class GameManager : Node2D
 
 	}
 
-	public void RespawnPlayer(){
+	public void RespawnPlayer()
+	{
 		PlayerController pc = GetNode<PlayerController>("Player");
 		pc.GlobalPosition = RespawnPoint.GlobalPosition;
 		pc.RespawnPlayer();
 	}
 
-	private void _on_player_death(){
+	private void _on_player_death()
+	{
 		RespawnPlayer();
 	}
 }

@@ -38,7 +38,8 @@ public partial class Arrow : CharacterBody2D
 		}
 	}
 
-	public void DestroyArrow(){
+	public void DestroyArrow()
+	{
 		QueueFree();
 	}
 }
