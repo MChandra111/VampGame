@@ -103,6 +103,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_e27xi")
+}, {
+"duration": 1.0,
+"texture": null
 }],
 "loop": false,
 "name": &"Death",
@@ -170,7 +173,7 @@ size = Vector2(12, 16)
 radius = 120.017
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yj5xa"]
-size = Vector2(10, 13)
+size = Vector2(12, 15)
 
 [node name="TurretEnemy" type="CharacterBody2D"]
 position = Vector2(593, 232)
@@ -203,7 +206,7 @@ shape = SubResource("CircleShape2D_tp5mg")
 [node name="Projectile" type="Marker2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1.5)
+position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_yj5xa")
 debug_color = Color(0.819608, 0, 0.964706, 0.419608)
 
